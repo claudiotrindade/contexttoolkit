@@ -1,0 +1,13 @@
+<map id="G" name="G">
+<area shape="rect" id="c15705" href="./RoomWidgetBean.html" title="context.arch.intelligibility.apps.roomlight.RoomWidgetBean" alt="" coords="16,19,141,45"/>
+<area shape="rect" id="c15706" href="./RoomWidget.html" title="context.arch.intelligibility.apps.roomlight.RoomWidget" alt="" coords="187,19,283,45"/>
+<area shape="rect" id="c15707" href="./RoomPanel.html" title="context.arch.intelligibility.apps.roomlight.RoomPanel" alt="" coords="328,19,416,45"/>
+<area shape="rect" id="c15708" href="./RoomModel.html" title="context.arch.intelligibility.apps.roomlight.RoomModel" alt="" coords="461,19,550,45"/>
+<area shape="rect" id="c15709" href="./RoomGenerator.html" title="context.arch.intelligibility.apps.roomlight.RoomGenerator" alt="" coords="595,19,707,45"/>
+<area shape="rect" id="c15710" href="./RoomEnactor.html" title="context.arch.intelligibility.apps.roomlight.RoomEnactor" alt="" coords="751,19,851,45"/>
+<area shape="rect" id="c15711" href="./RoomApplication.html" title="context.arch.intelligibility.apps.roomlight.RoomApplication" alt="" coords="895,19,1014,45"/>
+<area shape="rect" id="c15712" href="./LightWidget.html" title="context.arch.intelligibility.apps.roomlight.LightWidget" alt="" coords="1058,19,1147,45"/>
+<area shape="rect" id="c15713" href="./LightService.html" title="context.arch.intelligibility.apps.roomlight.LightService" alt="" coords="1192,19,1283,45"/>
+<area shape="rect" id="c15714" href="./DNDList.html" title="context.arch.intelligibility.apps.roomlight.DNDList" alt="" coords="1375,118,1444,143"/>
+<area shape="rect" id="c15715" href="./DNDComponentInterface.html" title="context.arch.intelligibility.apps.roomlight.DNDComponentInterface" alt="" coords="1328,11,1491,53"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="c6641" href="./Services.html" title="context.arch.service.Services" alt="" coords="16,17,85,42"/>
+<area shape="rect" id="c6642" href="./Service.html" title="context.arch.service.Service" alt="" coords="131,17,195,42"/>
+<area shape="rect" id="c6643" href="./InheritedService.html" title="context.arch.service.InheritedService" alt="" coords="20,113,132,138"/>
+<area shape="rect" id="c6644" href="./DisplayChoiceService.html" title="context.arch.service.DisplayChoiceService" alt="" coords="177,113,322,138"/>
+<area shape="rect" id="c6645" href="./DisplayChoiceFrame.html" title="context.arch.service.DisplayChoiceFrame" alt="" coords="240,17,381,42"/>
+</map>

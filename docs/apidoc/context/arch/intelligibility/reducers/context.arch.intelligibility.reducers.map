@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="c16101" href="./TruncationCReducer.html" title="context.arch.intelligibility.reducers.TruncationCReducer" alt="" coords="339,209,477,234"/>
+<area shape="rect" id="c16102" href="./ShortestDReducer.html" title="context.arch.intelligibility.reducers.ShortestDReducer" alt="" coords="15,209,142,234"/>
+<area shape="rect" id="c16103" href="./Reducer.html" title="context.arch.intelligibility.reducers.Reducer" alt="" coords="380,17,449,42"/>
+<area shape="rect" id="c16106" href="./DisjunctionReducer.html" title="context.arch.intelligibility.reducers.DisjunctionReducer" alt="" coords="168,113,301,138"/>
+<area shape="rect" id="c16107" href="./ConjunctionReducer.html" title="context.arch.intelligibility.reducers.ConjunctionReducer" alt="" coords="346,113,483,138"/>
+<area shape="rect" id="c16108" href="./CompoundReducer.html" title="context.arch.intelligibility.reducers.CompoundReducer" alt="" coords="528,113,659,138"/>
+<area shape="rect" id="c16104" href="./FirstDReducer.html" title="context.arch.intelligibility.reducers.FirstDReducer" alt="" coords="187,209,291,234"/>
+<area shape="rect" id="c16105" href="./FilteredCReducer.html" title="context.arch.intelligibility.reducers.FilteredCReducer" alt="" coords="521,209,642,234"/>
+</map>

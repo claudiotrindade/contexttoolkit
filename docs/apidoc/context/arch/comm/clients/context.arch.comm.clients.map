@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="c8979" href="./IndependentCommunication.html" title="context.arch.comm.clients.IndependentCommunication" alt="" coords="16,17,197,42"/>
+<area shape="rect" id="c8980" href="./IndependentClient.html" title="context.arch.comm.clients.IndependentClient" alt="" coords="243,17,368,42"/>
+<area shape="rect" id="c8981" href="./DiscovererClient.html" title="context.arch.comm.clients.DiscovererClient" alt="" coords="249,113,362,138"/>
+<area shape="rect" id="c8982" href="./ClientsPool.html" title="context.arch.comm.clients.ClientsPool" alt="" coords="413,17,499,42"/>
+<area shape="rect" id="c8983" href="./Client.html" title="context.arch.comm.clients.Client" alt="" coords="429,113,483,138"/>
+</map>

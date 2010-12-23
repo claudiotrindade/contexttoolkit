@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="c6253" href="./LeasesWatcher.html" title="context.arch.discoverer.lease.LeasesWatcher" alt="" coords="16,17,128,42"/>
+<area shape="rect" id="c6254" href="./LeasesKeeper.html" title="context.arch.discoverer.lease.LeasesKeeper" alt="" coords="173,17,277,42"/>
+<area shape="rect" id="c6255" href="./Lease.html" title="context.arch.discoverer.lease.Lease" alt="" coords="323,17,379,42"/>
+</map>

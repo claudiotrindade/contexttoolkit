@@ -1,0 +1,21 @@
+<map id="G" name="G">
+<area shape="rect" id="c13317" href="./TimeStepPanel.html" title="context.arch.intelligibility.apps.homeactivity.TimeStepPanel" alt="" coords="16,19,125,45"/>
+<area shape="rect" id="c13318" href="./TimelineStatesPanel.html" title="context.arch.intelligibility.apps.homeactivity.TimelineStatesPanel" alt="" coords="170,19,310,45"/>
+<area shape="rect" id="c13319" href="./SimpleHomeQueryPanel.html" title="context.arch.intelligibility.apps.homeactivity.SimpleHomeQueryPanel" alt="" coords="355,19,517,45"/>
+<area shape="rect" id="c13320" href="./SensorsWidget.html" title="context.arch.intelligibility.apps.homeactivity.SensorsWidget" alt="" coords="563,19,672,45"/>
+<area shape="rect" id="c13321" href="./SensorsWidget.SensorsData.html" title="context.arch.intelligibility.apps.homeactivity.SensorsWidget.SensorsData" alt="" coords="717,19,813,45"/>
+<area shape="rect" id="c13322" href="./SensorsGenerator.html" title="context.arch.intelligibility.apps.homeactivity.SensorsGenerator" alt="" coords="859,19,984,45"/>
+<area shape="rect" id="c13323" href="./SensorBarsPanel.html" title="context.arch.intelligibility.apps.homeactivity.SensorBarsPanel" alt="" coords="1029,19,1150,45"/>
+<area shape="rect" id="c13324" href="./SensorBarsPanel.BarLabel.html" title="context.arch.intelligibility.apps.homeactivity.SensorBarsPanel.BarLabel" alt="" coords="1195,19,1267,45"/>
+<area shape="rect" id="c13325" href="./HomeQueryPanel.html" title="context.arch.intelligibility.apps.homeactivity.HomeQueryPanel" alt="" coords="1312,19,1435,45"/>
+<area shape="rect" id="c13326" href="./HomeModel.html" title="context.arch.intelligibility.apps.homeactivity.HomeModel" alt="" coords="1479,19,1569,45"/>
+<area shape="rect" id="c13327" href="./HomeEvidencePanel.html" title="context.arch.intelligibility.apps.homeactivity.HomeEvidencePanel" alt="" coords="1613,19,1753,45"/>
+<area shape="rect" id="c13328" href="./HomeApplication.html" title="context.arch.intelligibility.apps.homeactivity.HomeApplication" alt="" coords="1797,19,1915,45"/>
+<area shape="rect" id="c13329" href="./FloorplanPanel.html" title="context.arch.intelligibility.apps.homeactivity.FloorplanPanel" alt="" coords="1960,19,2067,45"/>
+<area shape="rect" id="c13330" href="./FloorplanPanel.DetailsPanel.html" title="context.arch.intelligibility.apps.homeactivity.FloorplanPanel.DetailsPanel" alt="" coords="2112,19,2205,45"/>
+<area shape="rect" id="c13331" href="./BlendComposite.html" title="context.arch.intelligibility.apps.homeactivity.BlendComposite" alt="" coords="2250,19,2366,45"/>
+<area shape="rect" id="c13332" href="./BlendComposite.BlendingMode.html" title="context.arch.intelligibility.apps.homeactivity.BlendComposite.BlendingMode" alt="" coords="2410,11,2515,53"/>
+<area shape="rect" id="c13333" href="./ActivityWidget.html" title="context.arch.intelligibility.apps.homeactivity.ActivityWidget" alt="" coords="2560,19,2664,45"/>
+<area shape="rect" id="c13334" href="./ActivityWidget.ActivityData.html" title="context.arch.intelligibility.apps.homeactivity.ActivityWidget.ActivityData" alt="" coords="2709,19,2798,45"/>
+<area shape="rect" id="c13335" href="./ActivityEnactor.html" title="context.arch.intelligibility.apps.homeactivity.ActivityEnactor" alt="" coords="2842,19,2950,45"/>
+</map>

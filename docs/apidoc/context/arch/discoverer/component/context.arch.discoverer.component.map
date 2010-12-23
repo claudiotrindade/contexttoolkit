@@ -1,0 +1,20 @@
+<map id="G" name="G">
+<area shape="rect" id="c16899" href="./TypeElement.html" title="context.arch.discoverer.component.TypeElement" alt="" coords="15,305,113,330"/>
+<area shape="rect" id="c16900" href="./SubscriberElement.html" title="context.arch.discoverer.component.SubscriberElement" alt="" coords="1048,305,1179,330"/>
+<area shape="rect" id="c16901" href="./ServiceElement.html" title="context.arch.discoverer.component.ServiceElement" alt="" coords="1223,305,1334,330"/>
+<area shape="rect" id="c16902" href="./PortElement.html" title="context.arch.discoverer.component.PortElement" alt="" coords="157,305,251,330"/>
+<area shape="rect" id="c16903" href="./NonConstantAttributeNameElement.html" title="context.arch.discoverer.component.NonConstantAttributeNameElement" alt="" coords="1379,305,1605,330"/>
+<area shape="rect" id="c16904" href="./NonConstantAttributeElement.html" title="context.arch.discoverer.component.NonConstantAttributeElement" alt="" coords="597,305,790,330"/>
+<area shape="rect" id="c16905" href="./IdElement.html" title="context.arch.discoverer.component.IdElement" alt="" coords="295,305,374,330"/>
+<area shape="rect" id="c16906" href="./HostnameElement.html" title="context.arch.discoverer.component.HostnameElement" alt="" coords="1651,305,1779,330"/>
+<area shape="rect" id="c16907" href="./ConstantAttributeElement.html" title="context.arch.discoverer.component.ConstantAttributeElement" alt="" coords="834,305,1003,330"/>
+<area shape="rect" id="c16908" href="./ClassnameElement.html" title="context.arch.discoverer.component.ClassnameElement" alt="" coords="419,305,552,330"/>
+<area shape="rect" id="c16909" href="./CallbackElement.html" title="context.arch.discoverer.component.CallbackElement" alt="" coords="1823,305,1942,330"/>
+<area shape="rect" id="c16910" href="./AttributeElement.html" title="context.arch.discoverer.component.AttributeElement" alt="" coords="662,209,781,234"/>
+<area shape="rect" id="c16911" href="./Attribute2DElement.html" title="context.arch.discoverer.component.Attribute2DElement" alt="" coords="825,209,1015,234"/>
+<area shape="rect" id="c16912" href="./AbstractValueElement.html" title="context.arch.discoverer.component.AbstractValueElement" alt="" coords="173,209,496,234"/>
+<area shape="rect" id="c16913" href="./AbstractSingleElement.html" title="context.arch.discoverer.component.AbstractSingleElement" alt="" coords="353,113,564,138"/>
+<area shape="rect" id="c16914" href="./AbstractElement.html" title="context.arch.discoverer.component.AbstractElement" alt="" coords="543,17,735,42"/>
+<area shape="rect" id="c16916" href="./AbstractCollectionElement.html" title="context.arch.discoverer.component.AbstractCollectionElement" alt="" coords="704,113,936,138"/>
+<area shape="rect" id="c16915" href="./AbstractCollectionValueElement.html" title="context.arch.discoverer.component.AbstractCollectionValueElement" alt="" coords="1195,209,1575,234"/>
+</map>
