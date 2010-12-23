@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" id="c1173" href="./URLDecoder.html" title="context.arch.comm.protocol.URLDecoder" alt="" coords="16,19,109,45"/>
+<area shape="rect" id="c1174" href="./TCPServerSocket.html" title="context.arch.comm.protocol.TCPServerSocket" alt="" coords="155,19,277,45"/>
+<area shape="rect" id="c1181" href="./HTTPServerSocket.html" title="context.arch.comm.protocol.HTTPServerSocket" alt="" coords="151,118,281,143"/>
+<area shape="rect" id="c1175" href="./TCPClientSocket.html" title="context.arch.comm.protocol.TCPClientSocket" alt="" coords="328,19,448,45"/>
+<area shape="rect" id="c1183" href="./HTTPClientSocket.html" title="context.arch.comm.protocol.HTTPClientSocket" alt="" coords="325,118,451,143"/>
+<area shape="rect" id="c1176" href="./RequestData.html" title="context.arch.comm.protocol.RequestData" alt="" coords="493,19,589,45"/>
+<area shape="rect" id="c1177" href="./ProtocolException.html" title="context.arch.comm.protocol.ProtocolException" alt="" coords="634,19,761,45"/>
+<area shape="rect" id="c1178" href="./MulticastUDPSocket.html" title="context.arch.comm.protocol.MulticastUDPSocket" alt="" coords="801,118,943,143"/>
+<area shape="rect" id="c1182" href="./HTTPMulticastUDPSocket.html" title="context.arch.comm.protocol.HTTPMulticastUDPSocket" alt="" coords="785,214,959,239"/>
+<area shape="rect" id="c1179" href="./MulticastConstants.html" title="context.arch.comm.protocol.MulticastConstants" alt="" coords="805,11,939,53"/>
+<area shape="rect" id="c1180" href="./InvalidProtocolException.html" title="context.arch.comm.protocol.InvalidProtocolException" alt="" coords="983,19,1145,45"/>
+<area shape="rect" id="c1184" href="./BusyFlag.html" title="context.arch.comm.protocol.BusyFlag" alt="" coords="1189,19,1265,45"/>
+</map>

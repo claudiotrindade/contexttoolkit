@@ -1,0 +1,13 @@
+<map id="G" name="G">
+<area shape="rect" id="c5079" href="./WidgetXML.html" title="context.arch.widget.WidgetXML" alt="" coords="15,17,102,42"/>
+<area shape="rect" id="c5080" href="./WidgetHandles.html" title="context.arch.widget.WidgetHandles" alt="" coords="147,17,256,42"/>
+<area shape="rect" id="c5081" href="./WidgetHandle.html" title="context.arch.widget.WidgetHandle" alt="" coords="301,17,403,42"/>
+<area shape="rect" id="c5082" href="./WidgetBean.html" title="context.arch.widget.WidgetBean" alt="" coords="447,17,539,42"/>
+<area shape="rect" id="c5083" href="./Widget.html" title="context.arch.widget.Widget" alt="" coords="584,17,645,42"/>
+<area shape="rect" id="c5086" href="./SequenceWidget.html" title="context.arch.widget.SequenceWidget" alt="" coords="473,113,593,138"/>
+<area shape="rect" id="c5089" href="./ClassifierWidget.html" title="context.arch.widget.ClassifierWidget" alt="" coords="639,113,753,138"/>
+<area shape="rect" id="c5084" href="./Widget.WidgetData.html" title="context.arch.widget.Widget.WidgetData" alt="" coords="690,17,779,42"/>
+<area shape="rect" id="c5085" href="./Widget.ShutdownHook.html" title="context.arch.widget.Widget.ShutdownHook" alt="" coords="823,17,931,42"/>
+<area shape="rect" id="c5087" href="./RegistrationFrame.html" title="context.arch.widget.RegistrationFrame" alt="" coords="975,17,1102,42"/>
+<area shape="rect" id="c5088" href="./OffsetThread.html" title="context.arch.widget.OffsetThread" alt="" coords="1147,17,1240,42"/>
+</map>

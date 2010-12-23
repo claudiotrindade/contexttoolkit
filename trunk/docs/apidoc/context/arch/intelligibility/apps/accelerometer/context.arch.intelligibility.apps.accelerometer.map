@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="c0" href="./MotionWidget.html" title="context.arch.intelligibility.apps.accelerometer.MotionWidget" alt="" coords="16,17,117,42"/>
+<area shape="rect" id="c1" href="./MotionPresenter.html" title="context.arch.intelligibility.apps.accelerometer.MotionPresenter" alt="" coords="162,17,278,42"/>
+<area shape="rect" id="c2" href="./AccelerometerWidget.html" title="context.arch.intelligibility.apps.accelerometer.AccelerometerWidget" alt="" coords="322,17,467,42"/>
+<area shape="rect" id="c3" href="./AccelerometerModel.html" title="context.arch.intelligibility.apps.accelerometer.AccelerometerModel" alt="" coords="511,17,651,42"/>
+<area shape="rect" id="c4" href="./AccelerometerGenerator.html" title="context.arch.intelligibility.apps.accelerometer.AccelerometerGenerator" alt="" coords="695,17,857,42"/>
+<area shape="rect" id="c5" href="./AccelerometerEnactor.html" title="context.arch.intelligibility.apps.accelerometer.AccelerometerEnactor" alt="" coords="901,17,1051,42"/>
+<area shape="rect" id="c6" href="./AccelerometerDataConverter.html" title="context.arch.intelligibility.apps.accelerometer.AccelerometerDataConverter" alt="" coords="1095,17,1281,42"/>
+<area shape="rect" id="c7" href="./AccelerometerApplication.html" title="context.arch.intelligibility.apps.accelerometer.AccelerometerApplication" alt="" coords="1325,17,1494,42"/>
+</map>

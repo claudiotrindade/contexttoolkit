@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" id="c4298" href="./XMLEncoder.html" title="context.arch.comm.language.XMLEncoder" alt="" coords="28,118,121,143"/>
+<area shape="rect" id="c4299" href="./SAX_XMLDecoder.html" title="context.arch.comm.language.SAX_XMLDecoder" alt="" coords="175,118,300,143"/>
+<area shape="rect" id="c4300" href="./ParserObject.html" title="context.arch.comm.language.ParserObject" alt="" coords="341,19,438,45"/>
+<area shape="rect" id="c4301" href="./MessageHandler.html" title="context.arch.comm.language.MessageHandler" alt="" coords="483,11,600,53"/>
+<area shape="rect" id="c4302" href="./InvalidEncoderException.html" title="context.arch.comm.language.InvalidEncoderException" alt="" coords="645,19,806,45"/>
+<area shape="rect" id="c4303" href="./InvalidDecoderException.html" title="context.arch.comm.language.InvalidDecoderException" alt="" coords="850,19,1011,45"/>
+<area shape="rect" id="c4304" href="./EncoderInterface.html" title="context.arch.comm.language.EncoderInterface" alt="" coords="16,11,133,53"/>
+<area shape="rect" id="c4305" href="./EncodeException.html" title="context.arch.comm.language.EncodeException" alt="" coords="1056,19,1179,45"/>
+<area shape="rect" id="c4306" href="./DecoderInterface.html" title="context.arch.comm.language.DecoderInterface" alt="" coords="179,11,296,53"/>
+<area shape="rect" id="c4307" href="./DecodeException.html" title="context.arch.comm.language.DecodeException" alt="" coords="1224,19,1347,45"/>
+</map>
