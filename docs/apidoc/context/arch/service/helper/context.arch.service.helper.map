@@ -1,9 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="c1570" href="./ServiceInput.html" title="context.arch.service.helper.ServiceInput" alt="" coords="16,17,107,42"/>
-<area shape="rect" id="c1571" href="./ServiceDescriptions.html" title="context.arch.service.helper.ServiceDescriptions" alt="" coords="151,17,286,42"/>
-<area shape="rect" id="c1572" href="./ServiceDescription.html" title="context.arch.service.helper.ServiceDescription" alt="" coords="331,17,459,42"/>
-<area shape="rect" id="c1573" href="./PendingOut.html" title="context.arch.service.helper.PendingOut" alt="" coords="503,17,593,42"/>
-<area shape="rect" id="c1574" href="./PendingIn.html" title="context.arch.service.helper.PendingIn" alt="" coords="637,17,715,42"/>
-<area shape="rect" id="c1575" href="./FunctionDescriptions.html" title="context.arch.service.helper.FunctionDescriptions" alt="" coords="759,17,902,42"/>
-<area shape="rect" id="c1576" href="./FunctionDescription.html" title="context.arch.service.helper.FunctionDescription" alt="" coords="947,17,1083,42"/>
-</map>
