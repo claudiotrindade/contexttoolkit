@@ -1191,9 +1191,6 @@ public class ComponentDescription extends Object implements Cloneable {
 		return comp;
 	}
 	
-	public boolean hasAttribute(String attributeName) {
-		return getAllAttributes().containsName(attributeName);
-	}
 	
 	public ComponentDescription updateAttributes(ComponentDescription cd) {
 		for (Attribute<?> attribute : cd.getAllAttributes().values()) {

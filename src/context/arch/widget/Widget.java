@@ -30,7 +30,9 @@ import context.arch.service.helper.ServiceDescription;
 import context.arch.service.helper.ServiceInput;
 import context.arch.storage.Attribute;
 import context.arch.storage.AttributeNameValue;
+import context.arch.storage.AttributeNameValuePin;
 import context.arch.storage.Attributes;
+import context.arch.storage.Conditions;
 import context.arch.storage.Retrieval;
 import context.arch.storage.RetrievalResults;
 import context.arch.storage.StorageObject;
@@ -565,7 +567,9 @@ public abstract class Widget extends BaseObject {
 //		System.out.println("widget.notify attrs = " + attrs);
 		if (attrs == null) { return; }
 
-		setNonConstantAttributes(attrs); // update widget in memory
+		// comment becouse this method override not update widget in memory
+		//setNonConstantAttributes(attrs); // update widget in memory
+		memory(attrs);
 		store(attrs); // update widget in storage
 		sendToSubscribers(callbackName); // notify subscribers
 
@@ -613,6 +617,10 @@ public abstract class Widget extends BaseObject {
 		
 		public <T extends Comparable<? super T>> void setAttributeValue(String name, T value) {
 			atts.add(new AttributeNameValue<T>(name, value));			
+		}
+		
+		public <T extends Comparable<? super T>> void setAttributeValuePin(String name, T value, Integer pin, String pinType) {
+			atts.add(new AttributeNameValuePin<T>(name, value, pin, pinType));			
 		}
 		
 		public Attributes toAttributes() {
@@ -1687,6 +1695,25 @@ public abstract class Widget extends BaseObject {
 	 */
 	public static String getAttributeDefinition(String attributeTag) {
 		return null;
+	}
+	
+	/**
+	 * This method update attributes in memory
+	 *
+	 * @param data Data to update in memory
+	 * @see context.arch.storage.StorageObject#store(AttributeNameValues)
+	 */
+	protected void memory(Attributes data) {
+		for (Attribute<?> current : data.values()) {
+			Attribute<?> target = nonConstantAttributes.get(current.getName());
+			if (target instanceof AttributeNameValuePin<?>) {
+				nonConstantAttributes.put(current.getName(), ((AttributeNameValuePin<?>) target).cloneWithNewValue(((AttributeNameValue<?>) current).getValue())); 
+			} else if (target instanceof AttributeNameValue<?>) {
+				nonConstantAttributes.put(current.getName(), ((AttributeNameValue<?>) target).cloneWithNewValue(((AttributeNameValue<?>) current).getValue())); 
+			} else {
+				nonConstantAttributes.put(current.getName(), current);
+			}
+		}
 	}
 
 }

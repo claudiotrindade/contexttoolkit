@@ -77,6 +77,10 @@ public class Attributes extends ConcurrentHashMap<String, Attribute<?>> {
 //				System.out.println("Attributes.fromDataObject (AttributeNameValue)att : " + att);
 				atts.add(att);
 			}
+			else if (dobjName.equals(AttributeNameValuePin.ATTRIBUTE_NAME_VALUE_PIN)) {
+				AttributeNameValuePin<?> att = AttributeNameValuePin.fromDataObject(dobj);
+				atts.add(att);
+			}
 		}
 		
 		return atts;
@@ -154,8 +158,17 @@ public class Attributes extends ConcurrentHashMap<String, Attribute<?>> {
 			//System.out.println("filterAtt = " + filterAtt);
 			Attribute<?> localAtt = get(filterAtt.getName());
 			if (localAtt != null) {
+				if (filterAtt instanceof AttributeNameValuePin<?>) {
+					if (localAtt instanceof AttributeNameValuePin<?>) {
+						Object filterPin = ((AttributeNameValuePin<?>)filterAtt).getPin();
+						Object localPin = ((AttributeNameValuePin<?>)localAtt).getPin();
+						if (localPin != null && localPin.equals(filterPin)) {
+							subset.add(localAtt);
+						}
+					}
+				} 
 				// if subAtt is an AttributeNameValue, filter with the value as well
-				if (filterAtt instanceof AttributeNameValue<?>) {
+				else if (filterAtt instanceof AttributeNameValue<?>) {
 					if (localAtt instanceof AttributeNameValue<?>) {
 						Object filterValue = ((AttributeNameValue<?>)filterAtt).getValue();
 						Object localValue = ((AttributeNameValue<?>)localAtt).getValue();
@@ -178,7 +191,7 @@ public class Attributes extends ConcurrentHashMap<String, Attribute<?>> {
 	@SuppressWarnings("unchecked")
 	public <T extends Comparable<? super T>> T getAttributeValue(String attName) {
 		Attribute<?> att = super.get(attName);
-		if (att instanceof AttributeNameValue<?>) {
+		if (att != null && att instanceof AttributeNameValue<?>) {
 			return ((AttributeNameValue<T>) att).getValue();
 		}
 		else {

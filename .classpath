@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry excluding="audio-panflute/|audio-panflute/" kind="src" path="resources"/>
+	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
