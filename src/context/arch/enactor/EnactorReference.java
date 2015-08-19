@@ -179,7 +179,7 @@ public class EnactorReference {
 		}
 		
 		// subclass enactor may override attribute values
-		outAtts = conditionSatisfied(inWidgetState, outAtts);
+		outAtts = conditionSatisfied(enactor.getInWidgetState(), outAtts);
 		
 		// send request to update Out Widget with new data
 		enactor.updateOutWidget(outAtts); 
@@ -198,9 +198,8 @@ public class EnactorReference {
         		inputAtts.add(outAtts.get(attName));
         	}
         	
-	        enactor.executeWidgetService(
-	        		enactor.widgetComponentDescriptions[Enactor.OUT_WIDGET_INDEX], 
-	        		serviceInput);
+        	for(ComponentDescription cd:enactor.widgetComponentDescriptions[Enactor.OUT_WIDGET_INDEX])
+        		enactor.executeWidgetService(cd,serviceInput);
         }
 	}
 	

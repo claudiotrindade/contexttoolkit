@@ -52,8 +52,10 @@ public class Generator extends Enactor {
 		super.startSubscriptionManager();
 
 		// this was learned from the jumble in EnactorSubscriptionManager.init()
-		for (ComponentDescription cd : subscriptionManager.sendDiscovererAttributeQuery(widgetSubscriptionQueries[OUT_WIDGET_INDEX])) {
-			subscriptionManager.saveWidgetComponentDescriptions(cd, widgetSubscriptionQueries[OUT_WIDGET_INDEX]);
+		for(AbstractQueryItem<?, ?> widgetSubscriptionQuery :widgetSubscriptionQueries[OUT_WIDGET_INDEX]) {
+			for (ComponentDescription cd : subscriptionManager.sendDiscovererAttributeQuery(widgetSubscriptionQuery)) {
+				subscriptionManager.saveWidgetComponentDescriptions(cd, widgetSubscriptionQuery);
+			}
 		}
 	}
 

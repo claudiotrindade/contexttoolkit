@@ -16,6 +16,7 @@ import org.jdom.input.SAXBuilder;
 import context.arch.discoverer.ComponentDescription;
 import context.arch.discoverer.component.ClassnameElement;
 import context.arch.discoverer.component.ConstantAttributeElement;
+import context.arch.discoverer.component.NonConstantAttributeElement;
 import context.arch.discoverer.query.ANDQueryItem;
 import context.arch.discoverer.query.AbstractQueryItem;
 import context.arch.discoverer.query.RuleQueryItem;
@@ -118,9 +119,12 @@ public class WidgetXmlParser {
 			query.add(RuleQueryItem.instance(new ConstantAttributeElement(att)));
 		}
 		
+		// Adicionando os non-constants atributos que serviram para validar os compenents description no metodo subscribe da class EnactorSubscriptionManager.
 		// don't add non-constant attributes since tracking them would be for condition queries instead of subscription
 //		for (String attName : widgetStub.getNonConstantAttributeNames()) {
-//			query.add(RuleQueryItem.instance(new NonConstantAttributeElement(attName)));
+//			Attribute<?> att = widgetStub.getNonConstantAttribute(attName);
+//			AttributeNameValue<?> attNameValue = new AttributeNameValue(att.getName(),att.getType());
+//			query.add(RuleQueryItem.instance(new NonConstantAttributeElement(attNameValue)));
 //		}
 		
 		//System.out.println("getWidgetSubscriptionQuery query = " + query);

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import context.arch.BaseObject;
 import context.arch.comm.DataObject;
 import context.arch.discoverer.ComponentDescription;
+import context.arch.discoverer.ComponentDescriptions;
 import context.arch.discoverer.query.AbstractQueryItem;
 import context.arch.enactor.server.EnactorXMLServer;
 import context.arch.intelligibility.Explainer;
@@ -63,12 +64,12 @@ public abstract class Enactor {
 	
 	protected String outcomeName;
 	protected String outcomeValue;
-	protected ComponentDescription inWidgetState;
+	protected ComponentDescriptions inWidgetState;
 
 	public static final int IN_WIDGET_INDEX = 0;
 	public static final int OUT_WIDGET_INDEX = 1;
-	protected AbstractQueryItem<?,?>[] widgetSubscriptionQueries = (AbstractQueryItem<String,String>[]) new AbstractQueryItem[2]; // {inWidgetSubscriptionQuery, outWidgetSubscriptionQuery}
-	protected ComponentDescription[] widgetComponentDescriptions = new ComponentDescription[2]; // {inWidgetComponentDescription, outWidgetComponentDescription}
+	protected AbstractQueryItem<?,?>[][] widgetSubscriptionQueries = (AbstractQueryItem<String,String>[][]) new AbstractQueryItem[2][]; // {inWidgetSubscriptionQuery, outWidgetSubscriptionQuery}
+	protected ComponentDescription[][] widgetComponentDescriptions = new ComponentDescription[2][]; // {inWidgetComponentDescription, outWidgetComponentDescription}
 
 //	protected Class<? extends Widget> inWidgetClass;
 //	protected Class<? extends Widget> outWidgetClass;
@@ -77,7 +78,7 @@ public abstract class Enactor {
 	
 	protected Explainer explainer;
 	
-	public Enactor(AbstractQueryItem<?,?> inWidgetSubscriptionQuery, AbstractQueryItem<?,?> outWidgetSubscriptionQuery, 
+	public Enactor(AbstractQueryItem<?,?>[] inWidgetSubscriptionQuery, AbstractQueryItem<?,?>[] outWidgetSubscriptionQuery, 
 			String outcomeName, String shortId) {
 //		this.inWidgetClass = inWidgetClass; // may be null for Generator (subclass)
 //		this.outWidgetClass = outWidgetClass;
@@ -98,6 +99,17 @@ public abstract class Enactor {
 //		subscriptionManager = new EnactorSubscriptionManager(this);
 		
 		// Explainer is lazy loaded (see getExplainer())
+		
+		
+		widgetComponentDescriptions[0] = new ComponentDescription[widgetSubscriptionQueries[0].length];
+		widgetComponentDescriptions[1] = new ComponentDescription[widgetSubscriptionQueries[1].length];
+		
+		inWidgetState = new ComponentDescriptions();
+	}
+	
+	public Enactor(AbstractQueryItem<?,?> inWidgetSubscriptionQuery, AbstractQueryItem<?,?> outWidgetSubscriptionQuery, 
+			String outcomeName, String shortId) {
+		this(new AbstractQueryItem<?,?>[] {inWidgetSubscriptionQuery}, new AbstractQueryItem<?,?>[] {outWidgetSubscriptionQuery}, outcomeName, shortId);
 	}
 	
 	/**
@@ -108,17 +120,17 @@ public abstract class Enactor {
 		return this.getClass().getName();
 	}
 
-	public AbstractQueryItem<?,?> getInWidgetSubscriptionQuery() {
+	public AbstractQueryItem<?,?>[] getInWidgetSubscriptionQuery() {
 		return widgetSubscriptionQueries[0];
 	}
-	public void setInWidgetSubscriptionQueryQuery(AbstractQueryItem<String,String> query) {
+	public void setInWidgetSubscriptionQueryQuery(AbstractQueryItem<String,String>[] query) {
 		this.widgetSubscriptionQueries[0] = query;
 	}
 
-	public AbstractQueryItem<?,?> getOutWidgetSubscriptionQuery() {
+	public AbstractQueryItem<?,?>[] getOutWidgetSubscriptionQuery() {
 		return widgetSubscriptionQueries[1];
 	}
-	public void setOutWidgetSubscriptionQueryQuery(AbstractQueryItem<String,String> query) {
+	public void setOutWidgetSubscriptionQueryQuery(AbstractQueryItem<String,String>[] query) {
 		this.widgetSubscriptionQueries[1] = query;
 	}
 	
@@ -126,7 +138,7 @@ public abstract class Enactor {
 	 * 
 	 * @return {inWidgetSubscriptionQuery, outWidgetSubscriptionQuery}
 	 */
-	public AbstractQueryItem<?,?>[] getSubscriptionQueries() {
+	public AbstractQueryItem<?,?>[][] getSubscriptionQueries() {
 		return widgetSubscriptionQueries;
 	}
 
@@ -144,7 +156,10 @@ public abstract class Enactor {
 	 */
 	public boolean containsOutAttribute(String attName) {
 		//System.out.println("widgetComponentDescriptions[OUT_WIDGET_INDEX].getNonConstantAttributes() = " + widgetComponentDescriptions[OUT_WIDGET_INDEX].getNonConstantAttributes());
-		return widgetComponentDescriptions[OUT_WIDGET_INDEX].getNonConstantAttributes().contains(attName);
+		for(ComponentDescription cp :widgetComponentDescriptions[OUT_WIDGET_INDEX])
+			if(cp.getNonConstantAttributes().contains(attName))
+				return true;
+		return false;
 		
 		// TODO: sometimes attributes are empty, i.e. never set when subscribing
 	}
@@ -165,12 +180,19 @@ public abstract class Enactor {
 		return enactorReferences.keySet();
 	}
 	
+	// alterei
 	public ComponentDescription getInWidgetState() {
-		return inWidgetState;
+		return inWidgetState.mergeComponentDescriptions();
 	}
 	
-	public void setInWidgetState(ComponentDescription inWidgetState) {
-		this.inWidgetState = inWidgetState;
+	// alterei
+	public void setInWidgetState(ComponentDescription widgetState) {
+		if(this.inWidgetState.contains(widgetState)) {
+			int index = this.inWidgetState.indexOf(widgetState);
+			this.inWidgetState.set(index, widgetState);
+		} else {
+			this.inWidgetState.add(widgetState);
+		}
 	}
 	
 	public AbstractQueryItem<?,?> getLastSatisfiedQuery() {
@@ -362,8 +384,10 @@ public abstract class Enactor {
 	 * @param data
 	 * @return a DataObject representing any data returned by the Service
 	 */
-	public DataObject updateOutWidget(WidgetData data) {
-		return updateOutWidget(data.toAttributes());
+	public void updateOutWidget(WidgetData data) {
+//	public DataObject updateOutWidget(WidgetData data) {
+//		return updateOutWidget(data.toAttributes());
+		updateOutWidget(data.toAttributes());
 	}
 
 	/**
@@ -371,11 +395,13 @@ public abstract class Enactor {
 	 * @param atts Attributes of AttributeNameValue to set attribute values to
 	 * @return a DataObject representing any data returned by the Service
 	 */
-	public DataObject updateOutWidget(Attributes atts) {
+	public void updateOutWidget(Attributes atts) {
+//	public DataObject updateOutWidget(Attributes atts) {
 //        System.out.println("Enactor.updateOutWidget\t\t" + data);
 
 		if (widgetComponentDescriptions[Enactor.OUT_WIDGET_INDEX] == null) { // not yet started
-			return null;
+//			return null;
+			return ;
 		}
 		
 		/*
@@ -396,10 +422,14 @@ public abstract class Enactor {
 		/*
 		 * Update via delegate
 		 */
-        DataObject returnDataObject = subscriptionManager.updateOutWidget(
-        		widgetComponentDescriptions[Enactor.OUT_WIDGET_INDEX], atts);
-//        System.out.println("Enactor.updateOutWidget returnDataObject = " + returnDataObject);
-		return returnDataObject;
+		
+		for(ComponentDescription cd:widgetComponentDescriptions[Enactor.OUT_WIDGET_INDEX])
+	        subscriptionManager.updateOutWidget(cd, atts);
+		
+//        DataObject returnDataObject = subscriptionManager.updateOutWidget(
+//        		widgetComponentDescriptions[Enactor.OUT_WIDGET_INDEX], atts);
+////        System.out.println("Enactor.updateOutWidget returnDataObject = " + returnDataObject);
+//		return returnDataObject;
 		
 		// TODO maybe should also fireUpdateOutWidget
 	}

@@ -912,6 +912,7 @@ public class ComponentDescription extends Object implements Cloneable {
 		return nonConstantAttributes;
 	}
 	
+	
 	/**
 	 * Return non-constant attributes as a collection of AttributeNameValue<?>,
 	 * including only those with values (i.e. AttributeNameValue<?> not just Attribute<?>).
@@ -1123,6 +1124,7 @@ public class ComponentDescription extends Object implements Cloneable {
 	public DataObject getBasicDataObject() {
 		DataObjects v1 = new DataObjects();
 		v1.add(new DataObject(Discoverer.ID, this.id));
+		v1.add(new DataObject(Discoverer.COMPONENT_CLASSNAME, this.classname)); // adicionado o valor do classe name que sera usado na verificacao do subscribe
 		v1.add(new DataObject(Discoverer.HOSTNAME, this.hostname));
 		v1.add(new DataObject(Discoverer.PORT, Integer.toString(this.port)));
 		v1.add(new DataObject(Discoverer.TYPE, this.type));
@@ -1187,6 +1189,25 @@ public class ComponentDescription extends Object implements Cloneable {
 		comp.outAttributes.putAll(outAttributes);
 		
 		return comp;
+	}
+	
+	public boolean hasAttribute(String attributeName) {
+		return getAllAttributes().containsName(attributeName);
+	}
+	
+	public ComponentDescription updateAttributes(ComponentDescription cd) {
+		for (Attribute<?> attribute : cd.getAllAttributes().values()) {
+			if(this.getAllAttributes().containsName(attribute.getName())) { 
+				if (this.getAllAttributes().get(attribute.getName()) instanceof AttributeNameValue<?> && attribute instanceof AttributeNameValue<?>) {
+					((AttributeNameValue) this.getAllAttributes().get(attribute.getName())).setValue(((AttributeNameValue) attribute).getValue());
+				}
+			}
+		}
+		return this;
+	}
+	
+	public Attributes getConstantAttributesFull() {
+		return constantAttributes;
 	}
 
 }

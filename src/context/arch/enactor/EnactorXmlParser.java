@@ -13,6 +13,7 @@ import org.jdom.Element;
 import org.jdom.Namespace;
 
 import context.arch.discoverer.ComponentDescription;
+import context.arch.discoverer.ComponentDescriptions;
 import context.arch.discoverer.query.AbstractQueryItem;
 import context.arch.service.helper.ServiceInput;
 import context.arch.storage.Attribute;
@@ -120,19 +121,43 @@ public class EnactorXmlParser {
 		final String enactorName = exml.rootNode.getAttributeValue("name");
 
 		try {
+			
+			final ComponentDescriptions inWidgetStubs = new ComponentDescriptions();
+			final ComponentDescriptions outWidgetStubs = new ComponentDescriptions();
+			
+			List<AbstractQueryItem<?, ?>> inWidgetQueries = new ArrayList<AbstractQueryItem<?, ?>>();
+			List<AbstractQueryItem<?, ?>> outWidgetQueries = new ArrayList<AbstractQueryItem<?, ?>>();
+			
 			/*
-			 * get stubs in and out widgets
+			 * get stubs in widgets
 			 */
-			String inHref = exml.rootNode.getChild("InWidget", ns).getAttributeValue("href");
-			final ComponentDescription inWidgetStub = WidgetXmlParser.createWidgetStub(new URL(exml.baseUrl, inHref), "", inConstAtts); // doesn't set id
-			String outHref = exml.rootNode.getChild("OutWidget", ns).getAttributeValue("href");
-			final ComponentDescription outWidgetStub = WidgetXmlParser.createWidgetStub(new URL(exml.baseUrl, outHref), "", outConstAtts);
-
+			for (Object refChild : exml.rootNode.getChildren("InWidget", ns)) {
+				Element refElement = (Element) refChild;				
+				String inHref = refElement.getAttributeValue("href");
+				ComponentDescription inWidgetStub = WidgetXmlParser.createWidgetStub(new URL(exml.baseUrl, inHref), "", inConstAtts); // doesn't set id
+				inWidgetStubs.add(inWidgetStub);
+				/*
+				 * extract subscription queries for widgets
+				 */
+				AbstractQueryItem<?, ?> inWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(inWidgetStub);
+				inWidgetQueries.add(inWidgetQuery);
+			}
+			
 			/*
-			 * extract subscription queries for widgets
+			 * get stubs out widgets
 			 */
-			AbstractQueryItem<?, ?> inWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(inWidgetStub);
-			AbstractQueryItem<?, ?> outWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(outWidgetStub);
+			for (Object refChild : exml.rootNode.getChildren("OutWidget", ns)) {
+				Element refElement = (Element) refChild;				
+				String outHref = refElement.getAttributeValue("href");
+				ComponentDescription outWidgetStub = WidgetXmlParser.createWidgetStub(new URL(exml.baseUrl, outHref), "", outConstAtts);
+				outWidgetStubs.add(outWidgetStub);
+				/*
+				 * extract subscription queries for widgets
+				 */
+				AbstractQueryItem<?, ?> outWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(outWidgetStub);
+				outWidgetQueries.add(outWidgetQuery);
+			}
+			
 
 			// get outcome name
 			String outcomeName = exml.rootNode.getChildText("OutcomeName", ns);
@@ -156,7 +181,7 @@ public class EnactorXmlParser {
 			/*
 			 * construct enactor with details for EnactorReferences in its constructor
 			 */
-			Enactor enactor = new Enactor(inWidgetQuery, outWidgetQuery, outcomeName, exml.getFullId()) {
+			Enactor enactor = new Enactor(inWidgetQueries.toArray(new AbstractQueryItem<?,?>[0]), outWidgetQueries.toArray(new AbstractQueryItem<?,?>[0]), outcomeName, exml.getFullId()) {
 
 				{ // Constructor
 					// to store queries by name to be reusable (e.g. for ElseQueryItem)
@@ -175,7 +200,7 @@ public class EnactorXmlParser {
 						String queryStr = queryElement.getText().trim();
 
 						// parse query into Abstract Syntax Tree
-						QueryParser parser = new QueryParser(queryStr, constVars, queries, inWidgetStub);
+						QueryParser parser = new QueryParser(queryStr, constVars, queries, inWidgetStubs);
 						AbstractQueryItem<?, ?> query = parser.parseQuery();
 						queries.put(queryName, query); // query may be referenced, so store it
 
@@ -189,7 +214,7 @@ public class EnactorXmlParser {
 							Element outcomeElement = (Element) outcomeChild;
 
 							String outAttName = outcomeElement.getAttributeValue("outAttribute");
-							Attribute<?> outAtt = outWidgetStub.getNonConstantAttribute(outAttName);
+							Attribute<?> outAtt = outWidgetStubs.mergeComponentDescriptions().getNonConstantAttribute(outAttName);
 
 							String assnStr = outcomeElement.getText().trim();
 
@@ -211,7 +236,7 @@ public class EnactorXmlParser {
 							String functionName = serviceElement.getAttributeValue("function");
 
 							// get attributes
-							Attributes allAtts = outWidgetStub.getAllAttributes();
+							Attributes allAtts = outWidgetStubs.mergeComponentDescriptions().getAllAttributes();
 							Attributes inputAtts = new Attributes();
 							for (Object attChild : serviceElement.getChildren("Attribute", ns)) {
 								Element attElement = (Element) attChild;

@@ -14,7 +14,10 @@ import context.arch.comm.DataObject;
 import context.arch.comm.clients.IndependentCommunication;
 import context.arch.discoverer.ComponentDescription;
 import context.arch.discoverer.Discoverer;
+import context.arch.discoverer.component.AbstractElement;
+import context.arch.discoverer.component.AbstractSingleElement;
 import context.arch.discoverer.component.TypeElement;
+import context.arch.discoverer.query.ANDQueryItem;
 import context.arch.discoverer.query.BooleanQueryItem;
 import context.arch.discoverer.query.AbstractQueryItem;
 import context.arch.discoverer.query.ORQueryItem;
@@ -111,19 +114,21 @@ public class EnactorSubscriptionManager implements Handler {
 	 * Note similarity to {@link #handleSubscriptionCallback()}
 	 */
 	protected void handleNew() {
-		for (AbstractQueryItem<?,?> subscriptionQuery : enactor.getSubscriptionQueries()) {	
-//			System.out.println("enactor = " + enactor);
-//			System.out.println("subscriptionQuery = " + subscriptionQuery + '\n' +
-//							   "sendDiscovererAttributeQuery = " + sendDiscovererAttributeQuery(subscriptionQuery));
-			
-			for (ComponentDescription cd : sendDiscovererAttributeQuery(subscriptionQuery)) {	
-				// save pointers to widgets that were successfully subscribed to; do this before subscribing enactorRefs
-				saveWidgetComponentDescriptions(cd, subscriptionQuery);
+		for(AbstractQueryItem<?,?>[] subscriptionQueries:enactor.getSubscriptionQueries()) {
+			for (AbstractQueryItem<?,?> subscriptionQuery : subscriptionQueries) {	
+	//			System.out.println("enactor = " + enactor);
+	//			System.out.println("subscriptionQuery = " + subscriptionQuery + '\n' +
+	//							   "sendDiscovererAttributeQuery = " + sendDiscovererAttributeQuery(subscriptionQuery));
 				
-				// subscribe for each reference
-				for (EnactorReference er : enactor.getReferences()) {
-					subscribe(cd, er);
-				}				
+				for (ComponentDescription cd : sendDiscovererAttributeQuery(subscriptionQuery)) {	
+					// save pointers to widgets that were successfully subscribed to; do this before subscribing enactorRefs
+					saveWidgetComponentDescriptions(cd, subscriptionQuery);
+					
+					// subscribe for each reference
+					for (EnactorReference er : enactor.getReferences()) {
+						subscribe(cd, er);
+					}				
+				}
 			}
 		}
 	}
@@ -240,9 +245,13 @@ public class EnactorSubscriptionManager implements Handler {
 //			System.out.println("EnactorSubscriptionManager.handleCallback ------: query = " + query);
 //			new RuntimeException("EnactorSubscriptionManager.handleCallback ------: query.match(cd) = " + query.match(cd)).printStackTrace();
 			
+			// Carrega o estado atual dos atributos dos widgets relacionados.
+			ComponentDescription allWidgetState = ref.getEnactor().getInWidgetState();
+			allWidgetState.updateAttributes(widgetState); // atualiza com o estado atual do widget em execução
+			
 			Boolean queryResult;
 			if (	query != null && 
-					(queryResult = query.match(widgetState)) != null && queryResult) {
+					(queryResult = query.match(allWidgetState)) != null && queryResult) {
 				// execute references if they match
 				ref.evaluateComponent(eci);
 			}
@@ -287,17 +296,18 @@ public class EnactorSubscriptionManager implements Handler {
 //				}
 //			}
 //		}
-
-		for (AbstractQueryItem<?,?> subscriptionQuery : enactor.getSubscriptionQueries()) {			
-			Boolean queryResult = subscriptionQuery.match(cd);
-
-			if (queryResult != null && queryResult) { // matches subscription				
-				// save pointers to widgets that were successfully subscribed to; do this before subscribing enactorRefs
-				saveWidgetComponentDescriptions(cd, subscriptionQuery);
-				
-				// subscribe for each reference
-				for (EnactorReference er : enactor.getReferences()) {
-					subscribe(cd, er);
+		for (AbstractQueryItem<?,?>[] subscriptionQueries : enactor.getSubscriptionQueries()) {
+			for (AbstractQueryItem<?,?> subscriptionQuery : subscriptionQueries) {			
+				Boolean queryResult = subscriptionQuery.match(cd);
+	
+				if (queryResult != null && queryResult) { // matches subscription				
+					// save pointers to widgets that were successfully subscribed to; do this before subscribing enactorRefs
+					saveWidgetComponentDescriptions(cd, subscriptionQuery);
+					
+					// subscribe for each reference
+					for (EnactorReference er : enactor.getReferences()) {
+						subscribe(cd, er);
+					}
 				}
 			}
 		}
@@ -312,17 +322,26 @@ public class EnactorSubscriptionManager implements Handler {
 		// store component descriptions of widgets
 		// useful to update either of them later through the subscription mechanism (w/o direct memory reference)
 
-		if (enactor.widgetSubscriptionQueries[Enactor.IN_WIDGET_INDEX] == subscriptionQuery) {
-			enactor.widgetComponentDescriptions[Enactor.IN_WIDGET_INDEX] = cd;
-			//new RuntimeException("EnactorSubscriptionManager.saveWidgetComponentDescriptions IN_WIDGET cd = " + cd).printStackTrace();
+//		if (enactor.widgetSubscriptionQueries[Enactor.IN_WIDGET_INDEX] == subscriptionQuery) {
+//			enactor.widgetComponentDescriptions[Enactor.IN_WIDGET_INDEX] = cd;
+//			//new RuntimeException("EnactorSubscriptionManager.saveWidgetComponentDescriptions IN_WIDGET cd = " + cd).printStackTrace();
+//		}
+//		
+//		// note this is not "else if", since both IN and OUT may be the same
+//		// e.g. for querying part of a widget, and manipulating another part
+//		else if (enactor.widgetSubscriptionQueries[Enactor.OUT_WIDGET_INDEX] == subscriptionQuery) {
+//			enactor.widgetComponentDescriptions[Enactor.OUT_WIDGET_INDEX] = cd;
+//			//new RuntimeException("EnactorSubscriptionManager.saveWidgetComponentDescriptions OUT_WIDGET cd = " + cd).printStackTrace();
+//		}
+		
+		for (int i = 0; i < enactor.widgetSubscriptionQueries.length; i++) {
+			for (int j = 0; j < enactor.widgetSubscriptionQueries[i].length; j++) {
+				if(enactor.widgetSubscriptionQueries[i][j] == subscriptionQuery) {
+					enactor.widgetComponentDescriptions[i][j] = cd;
+				}
+			}
 		}
 		
-		// note this is not "else if", since both IN and OUT may be the same
-		// e.g. for querying part of a widget, and manipulating another part
-		else if (enactor.widgetSubscriptionQueries[Enactor.OUT_WIDGET_INDEX] == subscriptionQuery) {
-			enactor.widgetComponentDescriptions[Enactor.OUT_WIDGET_INDEX] = cd;
-			//new RuntimeException("EnactorSubscriptionManager.saveWidgetComponentDescriptions OUT_WIDGET cd = " + cd).printStackTrace();
-		}
 	}
 
 	/**
@@ -349,41 +368,61 @@ public class EnactorSubscriptionManager implements Handler {
 		//saveWidgetComponentDescriptions(cd, enactor);
 
 		if (!widgetIds.containsKey(cd.id)) {
-			AbstractQueryItem<?,?> subscriptionQuery = er.getEnactor().getInWidgetSubscriptionQuery();
-			if (subscriptionQuery == null) { return; } // may be null if Enactor is actually a Generator with no In, but only and Out
 			
-			eci = new EnactorComponentInfo();
-
-			// create subscription; do we set the subscriberID here???
-			ClientSideSubscriber subscriber = new ClientSideSubscriber(
-					baseObjDelegate.getId(), BaseObject.getHostName(), baseObjDelegate.getPort(),
-					Widget.CALLBACK_UPDATE, er.getEnactor().getInWidgetSubscriptionQuery(), null);
-			baseObjDelegate.subscribeTo(this, cd.id, cd.hostname, cd.port, subscriber);
-			
-			// put an entry in the widgetSubscriptions that will allow us to lookup the description & css later
-			eci.addReference(er);
-			eci.setClientSideSubscriber(subscriber);
-			eci.setComponentDescription(cd);
-			
-			// initialize current state to be initial component description
-			eci.setCurrentState(cd);
-			String  subscriptionId = subscriber.getSubscriptionId(); 
-			widgetSubscriptions.put(subscriptionId, eci);
-			discoSub.setSubscriptionId(subscriptionId); // TODO: not sure if this is correct, seems like it would be changing for each enactorRef --Brian
-						
-			widgetReferences.get(er).addWidgetSubscription(subscriptionId);
-			widgetIds.put(cd.id, subscriptionId);
-
+			for (AbstractQueryItem<?,?> subscriptionQuery : er.getEnactor().getInWidgetSubscriptionQuery()) {
+				if (subscriptionQuery == null) { return; } // may be null if Enactor is actually a Generator with no In, but only and Out	
+				
+				if(matchSubscribe(subscriptionQuery, cd)) {
+					eci = new EnactorComponentInfo();
+		
+					// create subscription; do we set the subscriberID here???
+					ClientSideSubscriber subscriber = new ClientSideSubscriber(
+							baseObjDelegate.getId(), BaseObject.getHostName(), baseObjDelegate.getPort(),
+							Widget.CALLBACK_UPDATE, subscriptionQuery, null);
+					baseObjDelegate.subscribeTo(this, cd.id, cd.hostname, cd.port, subscriber);
+					
+					// put an entry in the widgetSubscriptions that will allow us to lookup the description & css later
+					eci.addReference(er);
+					eci.setClientSideSubscriber(subscriber);
+					eci.setComponentDescription(cd);
+					
+					// initialize current state to be initial component description
+					eci.setCurrentState(cd);
+					String  subscriptionId = subscriber.getSubscriptionId(); 
+					widgetSubscriptions.put(subscriptionId, eci);
+					discoSub.setSubscriptionId(subscriptionId); // TODO: not sure if this is correct, seems like it would be changing for each enactorRef --Brian
+								
+					widgetReferences.get(er).addWidgetSubscription(subscriptionId);
+					widgetIds.put(cd.id, subscriptionId);
+					
+					//notify EnactorReference
+					er.componentAdded(eci);
+				}
+			}
 		} else {
 			// for now we assume only one subscription per widget. This could change in the future.
 			String subscriptionId = widgetIds.get(cd.id);
 			eci = widgetSubscriptions.get(subscriptionId);
 			eci.addReference(er);
 			updateWidgetSubscriptionCondition(eci);
+			
+			//notify EnactorReference
+			er.componentAdded(eci);
 		}
 
 		//notify EnactorReference
-		er.componentAdded(eci);
+//		er.componentAdded(eci);
+	}
+	
+	private boolean matchSubscribe(AbstractQueryItem<?,?> sq, ComponentDescription cd) {
+		Boolean result = false;
+		for(AbstractQueryItem<?,?> child : ((ANDQueryItem)sq).getChildren()) {
+			AbstractElement<?, ?, ?> ae = ((RuleQueryItem<?,?>) child).getElementToMatch();
+			if(ae.getValue().equals(cd.classname)) {
+				result = true;
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -423,8 +462,10 @@ public class EnactorSubscriptionManager implements Handler {
 			
 			BooleanQueryItem query = new ORQueryItem();
 			for (EnactorReference er : eci.getReferences()) {
-				for (AbstractQueryItem<?,?> subscriptionQuery : er.getEnactor().getSubscriptionQueries()) {
-					query.add(subscriptionQuery);
+				for (AbstractQueryItem<?,?>[] subscriptionQueries : er.getEnactor().getSubscriptionQueries()) {
+					for (AbstractQueryItem<?,?> subscriptionQuery : subscriptionQueries) {
+						query.add(subscriptionQuery);
+					}
 				}
 			}
 			css.setCondition(query);
