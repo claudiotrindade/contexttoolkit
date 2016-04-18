@@ -187,9 +187,9 @@ public abstract class Enactor {
 	
 	// alterei
 	public void setInWidgetState(ComponentDescription widgetState) {
-		if(this.inWidgetState.contains(widgetState)) {
-			int index = this.inWidgetState.indexOf(widgetState);
-			this.inWidgetState.set(index, widgetState);
+		int index = this.inWidgetState.indexOf(widgetState);
+		if(index >= 0) {
+			this.inWidgetState.get(index).updateAttributes(widgetState);
 		} else {
 			this.inWidgetState.add(widgetState);
 		}

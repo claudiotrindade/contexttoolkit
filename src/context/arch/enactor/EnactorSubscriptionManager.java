@@ -113,8 +113,8 @@ public class EnactorSubscriptionManager implements Handler {
 	 * Note similarity to {@link #handleSubscriptionCallback()}
 	 */
 	protected void handleNew() {
-		for(AbstractQueryItem<?,?>[] subscriptionQueries:enactor.getSubscriptionQueries()) {
-			for (AbstractQueryItem<?,?> subscriptionQuery : subscriptionQueries) {	
+	//	for(AbstractQueryItem<?,?>[] subscriptionQueries : enactor.getSubscriptionQueries()) {
+			for (AbstractQueryItem<?,?> subscriptionQuery : enactor.getInWidgetSubscriptionQuery()) {	
 	//			System.out.println("enactor = " + enactor);
 	//			System.out.println("subscriptionQuery = " + subscriptionQuery + '\n' +
 	//							   "sendDiscovererAttributeQuery = " + sendDiscovererAttributeQuery(subscriptionQuery));
@@ -129,7 +129,12 @@ public class EnactorSubscriptionManager implements Handler {
 					}				
 				}
 			}
-		}
+			for (AbstractQueryItem<?,?> subscriptionQuery : enactor.getOutWidgetSubscriptionQuery()) {	
+				for (ComponentDescription cd : sendDiscovererAttributeQuery(subscriptionQuery)) {	
+					saveWidgetComponentDescriptions(cd, subscriptionQuery);				
+				}
+			}
+//		}
 	}
 
 	/**
@@ -246,13 +251,20 @@ public class EnactorSubscriptionManager implements Handler {
 			
 			// Carrega o estado atual dos atributos dos widgets relacionados.
 			ComponentDescription allWidgetState = ref.getEnactor().getInWidgetState();
-			allWidgetState.updateAttributes(widgetState); // atualiza com o estado atual do widget em execução
+			if (allWidgetState.getNonConstantAttributeNames().isEmpty()) {
+				allWidgetState = widgetState;
+			} else {
+				allWidgetState.updateAttributes(widgetState); // atualiza com o estado atual do widget em execu����o
+			}
 			
 			Boolean queryResult;
 			if (	query != null && 
 					(queryResult = query.match(allWidgetState)) != null && queryResult) {
 				// execute references if they match
 				ref.evaluateComponent(eci);
+				if(ref._break) {
+					break;
+				}
 			}
 		}
 
